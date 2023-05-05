@@ -15,7 +15,7 @@ export default function ({ command, mode }: ConfigEnv): UserConfig {
   const viteEnv = wrapperEnv(env);
 
   return {
-    root,
+    base: './',
     resolve: {
       alias: [
         {

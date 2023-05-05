@@ -43,9 +43,10 @@
 <script lang="ts" setup name="LoginPage">
 
   import { reactive, ref } from 'vue';
-  import { useUserStore } from '/@/store/modules/user';
+  
   import { getValidateCode } from '/@/api';
   import { showFailToast } from 'vant';
+  import { useUserStore } from '/@/store/modules/user';
   const userStore = useUserStore();
   const formData = reactive({
     phone: '',

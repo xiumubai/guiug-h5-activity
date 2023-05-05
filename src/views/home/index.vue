@@ -15,7 +15,7 @@
 </template>
  
 <script setup>
-import { ref} from 'vue'
+import { ref, onMounted} from 'vue'
 // import { showToast } from 'vant';
 import { saveCoupon } from '/@/api';
 import router from '/@/router';
@@ -24,6 +24,15 @@ const isAllowClick = ref(true) //是否能够点击
 const rotate_deg = ref(0) //指针旋转的角度
 const amount = ref(0) // 选中金额
 const rotate_transition = ref("transform 3.5s ease-in-out") //初始化选中的过度属性控制
+import { useUserStore } from '/@/store/modules/user';
+
+const userStore = useUserStore();
+onMounted(() => {
+  // 未登陆跳转到登陆页面
+  if (!userStore.token) {
+    router.push({ path: '/login' });
+  }
+})
 
 const start = () => {
   if (LuckyClick.value == 0) {
@@ -100,14 +109,14 @@ const set = () => {
   //方法2
   let __rand__ = Math.random();
   console.log('随机数', __rand__);
-  if (__rand__ < 0.3) winIndex = 3;       // 1000元
-  else if (__rand__ < 0.5) winIndex = 7;  // 1000元
-  else if (__rand__ < 0.7) winIndex = 2;  // 800元
-  else if (__rand__ < 0.8) winIndex = 6;  // 800元
-  else if (__rand__ < 0.9) winIndex = 1;  // 500元
-  else if (__rand__ < 0.95) winIndex = 5; // 500元
-  else if (__rand__ < 0.97) winIndex = 0; // 200元
-  else if (__rand__ < 1) winIndex = 4;    // 200元
+  if (__rand__ < 0.15) winIndex = 3;       // 1000元
+  else if (__rand__ < 0.3) winIndex = 7;  // 1000元
+  else if (__rand__ < 0.45) winIndex = 2;  // 800元
+  else if (__rand__ < 0.6) winIndex = 6;  // 800元
+  else if (__rand__ < 0.8) winIndex = 1;  // 500元
+  else if (__rand__ < 1) winIndex = 5; // 500元
+  else if (__rand__ === 3) winIndex = 0; // 200元
+  else if (__rand__ === 2) winIndex = 4;    // 200元
 
   return winIndex;
 }
