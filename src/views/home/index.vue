@@ -1,5 +1,10 @@
 <template>
   <div class="dial">
+    <img class="logo" src="../../assets/images/logo.png"/>
+    <div class="header_content">
+      <img class="title" src="../../assets/images/title.png"/>
+      <div class="sub_title">立即参与 ，100%中奖</div>
+    </div>
     <!-- 转盘包裹 -->
     <div class="rotate">
       <!-- 转盘图片 -->
@@ -11,17 +16,25 @@
       <!-- 指针图片 -->
       <img class="pointer" src="../../assets/click.png" @click="start" />
     </div>
+    <div class="rule">
+      <div class="rule_title">抽奖规则</div>
+      <div class="rule_item">
+        <p>1、只限于2023年5月份报名就业全程班的学员哦 </p>
+        <p>2、每个人只有一次抽奖机会哈 </p>
+        <p> 3、须在2023年12月31号前缴费进班哈</p>
+      </div>
+    </div>
   </div>
 </template>
  
 <script setup>
 import { ref, onMounted} from 'vue'
-// import { showToast } from 'vant';
+import { showToast } from 'vant';
 import { saveCoupon } from '/@/api';
-import router from '/@/router';
+// import router from '/@/router';
 const LuckyClick = ref(200)
-const isAllowClick = ref(true) //是否能够点击
-const rotate_deg = ref(0) //指针旋转的角度
+const isAllowClick = ref(true) // 是否能够点击
+const rotate_deg = ref(0) // 指针旋转的角度
 const amount = ref(0) // 选中金额
 const rotate_transition = ref("transform 3.5s ease-in-out") //初始化选中的过度属性控制
 import { useUserStore } from '/@/store/modules/user';
@@ -29,6 +42,7 @@ import { useUserStore } from '/@/store/modules/user';
 const userStore = useUserStore();
 onMounted(() => {
   // 未登陆跳转到登陆页面
+  // console.log(userStore.token);
   if (!userStore.token) {
     router.push({ path: '/login' });
   }
@@ -36,11 +50,10 @@ onMounted(() => {
 
 const start = () => {
   if (LuckyClick.value == 0) {
-    alert("机会已经用完了");
-    // showToast({
-    //   message: '自定义图标',
-    //   icon: 'like-o',
-    // });
+    showToast({
+      message: '抽奖机会已经用完了',
+      position: 'top',
+    });
     return;
   }
   rotating();
@@ -50,6 +63,7 @@ const rotating = () => {
   if (!isAllowClick.value) return;
   isAllowClick.value = false;
   rotate_transition.value = "transform 3s ease-in-out";
+  // rotate-center ;
   LuckyClick.value--;
   var rand_circle = 10; //默认多旋转5圈
   //   var winningIndex = Math.floor(Math.random() * 8); //获奖的下标   0-7   没有概率每个平均
@@ -59,33 +73,22 @@ const rotating = () => {
   var deg = rand_circle * 360 + randomDeg; //将要旋转的度数  由于是顺时针的转动方向需要用360度来减
   rotate_deg.value = "rotate(" + deg + "deg)";
   setTimeout(function() {
-    isAllowClick.value = true;
-    rotate_deg.value = "rotate(" + 0 + "deg)"; //定时器关闭的时候重置角度
-    rotate_transition.value = "";
     if (winningIndex == 0) {
-      alert("恭喜您，获得200元优惠券");
       amount.value = 200
     } else if (winningIndex == 1) {
       amount.value = 500
-      alert("恭喜您，获得500元优惠券");
     } else if (winningIndex == 2) {
       amount.value = 800
-      alert("恭喜您，获得800元优惠券");
     } else if (winningIndex == 3) {
       amount.value = 1000
-      alert("恭喜您，获得1000元优惠券");
     } else if (winningIndex == 4) {
       amount.value = 200
-      alert("恭喜您，获得200元优惠券");
     } else if (winningIndex == 5) {
       amount.value = 500
-      alert("恭喜您，获得500元优惠券");
     } else if (winningIndex == 6) {
       amount.value = 800
-      alert("恭喜您，获得800元优惠券");
     } else if (winningIndex == 7) {
       amount.value = 1000
-      alert("恭喜您，获得1000元优惠券");
     }
     save()
   }, 3500);
@@ -93,13 +96,27 @@ const rotating = () => {
 }
 
 const save = async () => {
-  console.log('抽奖结束');
   const res = await saveCoupon({
     name: '10周年校庆新学员福利',
     amount: amount.value
   })
   if (res.status === 200) {
-    router.push({ path: '/login' });
+    // 抽奖结束,抽奖次数设置为0
+    LuckyClick.value = 0
+    showToast({
+      message: `恭喜您，获得${amount.value}元优惠券`,
+      icon: 'like-o',
+      position: 'top',
+      duration: 2500,
+      overlay: true,
+      forbidClick: true,
+      onClose: () => {
+        isAllowClick.value = true;
+        rotate_deg.value = "rotate(" + 0 + "deg)";
+        rotate_transition.value = "";
+      }
+    });
+    // router.push({ path: '/login' });
   }
 }
 
@@ -128,12 +145,76 @@ const set = () => {
 
 .dial {
   height: 100%;
-  background-image: url('../../assets/bg.jpg');
+  background-image: url('../../assets/images/choujiang_bg.jpg');
+  background-size: 100% 100%;
+
+  .logo {
+    width: 171px;
+    height: 36px;
+    position: fixed;
+    top: 34px;
+    right: 40px;
+  }
+
+  .header_content {
+    padding-top: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+    .title {
+      width: 586px;
+      height: 83px;
+      margin-bottom: 27px;
+    }
+
+    .sub_title {
+      text-align: center;
+      width: 531px;
+      height: 53px;
+      font-family: Alibaba PuHuiTi;
+      font-weight: 500;
+      color: #FFFFFF;
+      line-height: 51px;
+      font-size: 30px;
+      background-image: url('../../assets/images/sub_title_bg.png');
+      background-size: 100% 100%;
+    }
+
+    
+  }
+
+  .rule {
+    position: absolute;
+    left: 65px;
+    bottom: 112px;
+    .rule_title {
+      text-align: center;
+      height: 29px;
+      font-size: 30px;
+      font-family: Source Han Sans SC;
+      font-weight: bold;
+      color: #D3003F;
+      line-height: 36px;
+      margin-bottom: 37px;
+    }
+
+    .rule_item {
+      font-size: 24px;
+      font-family: Source Han Sans SC;
+      font-weight: 500;
+      color: #D3003F;
+      line-height: 36px;
+    }
+    
+  }
 }
 .rotate {
-  width: 20.1rem;
-  height: 20.1rem;
-  background: #ffbe04;
+  width: 692px;
+  height: 692px;
+  margin: 0 auto;
+  // background: #ffbe04;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
@@ -151,101 +232,12 @@ const set = () => {
 }
  
 .pointer {
-  width: 5.5rem;
-  height: 6.03rem;
+  width: 190px;
+  height: 210px;
   position: absolute;
-  top: 46%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-/* 圆点 */
-.rotate .circle {
-  position: absolute;
-  display: block;
-  border-radius: 50%;
-  height: 0.16rem;
-  width: 0.16rem;
-  background: black;
-}
- 
-.rotate .circle_0 {
-  top: 0.08rem;
-  left: 2.92rem;
-}
- 
-.rotate .circle_1 {
-  top: 0.28rem;
-  left: 4.05rem;
-}
- 
-.rotate .circle_2 {
-  top: 0.86rem;
-  left: 4.95rem;
-}
- 
-.rotate .circle_3 {
-  top: 1.85rem;
-  left: 5.65rem;
-}
- 
-.rotate .circle_4 {
-  top: 2.85rem;
-  right: 0.1rem;
-}
- 
-.rotate .circle_5 {
-  bottom: 1.89rem;
-  right: 0.29rem;
-}
- 
-.rotate .circle_6 {
-  bottom: 0.96rem;
-  right: 0.88rem;
-}
- 
-.rotate .circle_7 {
-  bottom: 0.34rem;
-  right: 1.76rem;
-}
- 
-.rotate .circle_8 {
-  bottom: 0.06rem;
-  right: 3.06rem;
-}
- 
-.rotate .circle_9 {
-  bottom: 0.28rem;
-  left: 1.9rem;
-}
- 
-.rotate .circle_10 {
-  bottom: 0.96rem;
-  left: 0.88rem;
-}
- 
-.rotate .circle_11 {
-  bottom: 1.82rem;
-  left: 0.28rem;
-}
- 
-.rotate .circle_12 {
-  top: 2.9rem;
-  left: 0.1rem;
-}
- 
-.rotate .circle_13 {
-  top: 1.9rem;
-  left: 0.28rem;
-}
- 
-.rotate .circle_14 {
-  top: 1rem;
-  left: 0.86rem;
-}
- 
-.rotate .circle_15 {
-  top: 0.32rem;
-  left: 1.76rem;
-}
 </style>

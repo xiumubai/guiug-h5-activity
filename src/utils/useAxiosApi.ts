@@ -4,10 +4,9 @@ import { showToast } from 'vant';
 import 'vant/es/toast/style';
 import { useUserStore } from '/@/store/modules/user';
 let userStore: any = null;
-const baseApi = 'http://47.93.118.241:8888'
 // create an axios instance
 const instance = axios.create({
-  baseURL: baseApi,
+  baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 5000,
 });
 // request interceptor

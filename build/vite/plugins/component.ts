@@ -29,7 +29,7 @@ export const AutoRegistryComponents = () => {
     globalNamespaces: [],
     directives: true,
     include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-    exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/, /[\\/]\.nuxt[\\/]/],
+    exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.vant[\\/]/, /[\\/]\.nuxt[\\/]/],
     resolvers: [VueUseComponentsResolver(), VantResolver(), VarletUIResolver(), NutUIResolver()],
   });
 };

@@ -10,7 +10,6 @@ import vueSetupExtend from 'vite-plugin-vue-setup-extend';
 import { ConfigSvgIconsPlugin } from './svgIcons';
 import { AutoRegistryComponents } from './component';
 import { AutoImportDeps } from './autoImport';
-import { ConfigMockPlugin } from './mock';
 import { ConfigCompressPlugin } from './compress';
 import { ConfigPagesPlugin } from './pages';
 import { ConfigRestartPlugin } from './restart';
@@ -20,7 +19,7 @@ import { ConfigImageminPlugin } from './imagemin';
 import { ConfigVisualizerConfig } from './visualizer';
 
 export function createVitePlugins(env: ViteEnv, isBuild: boolean) {
-  const { VITE_USE_MOCK, VITE_USE_ERUDA, VITE_USE_COMPRESS, VITE_USE_REPORT } = env;
+  const { VITE_USE_ERUDA, VITE_USE_COMPRESS, VITE_USE_REPORT } = env;
 
   const vitePlugins: (PluginOption | PluginOption[])[] = [
     // vue支持
@@ -51,9 +50,6 @@ export function createVitePlugins(env: ViteEnv, isBuild: boolean) {
 
   // rollup-plugin-visualizer
   VITE_USE_REPORT && vitePlugins.push(ConfigVisualizerConfig());
-
-  // vite-plugin-mock
-  VITE_USE_MOCK && vitePlugins.push(ConfigMockPlugin(isBuild));
 
   // vite-plugin-svg-icons
   vitePlugins.push(ConfigSvgIconsPlugin(isBuild));

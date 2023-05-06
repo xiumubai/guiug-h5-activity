@@ -3,6 +3,7 @@ import { resolve } from 'path';
 import { ConfigEnv, loadEnv, UserConfig } from 'vite';
 import { wrapperEnv } from './build/utils';
 
+
 const pathResolve = (dir: string) => {
   return resolve(process.cwd(), '.', dir);
 };
@@ -39,7 +40,7 @@ export default function ({ command, mode }: ConfigEnv): UserConfig {
       hmr: true,
       proxy: {
         '/api': {
-            target: 'http://47.93.118.241:8888',
+            target: env.VITE_APP_BASE_API,
             changeOrigin: true,
             // rewrite: (path) => path.replace(/^\/api/, '')
         }

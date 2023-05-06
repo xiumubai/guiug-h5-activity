@@ -2,17 +2,15 @@ export const routes = [
   {
     path: '/',
     redirect: '/home',
-    component: () => import('/@/layout/basic/index.vue'),
-    children: [
-      {
-        path: 'home',
-        component: () => import('/@/views/home/index.vue'),
-        meta: {
-          title: 'tabbar.home',
-          keepAlive: true,
-        },
-      },
-    ],
+  },
+  {
+    name: 'home',
+    path: '/home',
+    component: () => import('/@/views/home/index.vue'),
+    meta: {
+      title: 'tabbar.home',
+      keepAlive: true,
+    },
   },
   {
     name: 'login',
