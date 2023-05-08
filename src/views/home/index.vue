@@ -107,7 +107,7 @@ const save = async () => {
       message: `恭喜您，获得${amount.value}元优惠券`,
       icon: 'like-o',
       position: 'top',
-      duration: 2500,
+      duration: 4000,
       overlay: true,
       forbidClick: true,
       onClose: () => {
