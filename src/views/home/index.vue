@@ -196,11 +196,12 @@ const set = () => {
 
   .rule {
     position: absolute;
-    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     bottom: 112px;
     width: 100%;
     .rule_title {
-      text-align: center;
       height: 29px;
       font-size: 30px;
       font-family: Source Han Sans SC;
@@ -211,7 +212,7 @@ const set = () => {
     }
 
     .rule_item {
-      padding-left: 65px;
+      // padding-left: 120px;
       font-size: 24px;
       font-family: Source Han Sans SC;
       font-weight: 500;

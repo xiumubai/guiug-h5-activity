@@ -49,7 +49,10 @@ instance.interceptors.response.use(
     const res = response.data;
     // if the custom code is not 200, it is judged as an error.
     if (res.status !== 200) {
-      showToast(res.message);
+      showToast({
+        message: res.message,
+        duration: 3000
+      });
       return Promise.reject(res.msg || 'Error');
     } else {
       return res;
