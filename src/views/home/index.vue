@@ -29,7 +29,7 @@
  
 <script setup>
 import { ref, onMounted} from 'vue'
-import { showToast } from 'vant';
+import { showToast, showDialog } from 'vant';
 import { saveCoupon } from '/@/api';
 // import router from '/@/router';
 const LuckyClick = ref(200)
@@ -100,23 +100,32 @@ const save = async () => {
     name: '10周年校庆新学员福利',
     amount: amount.value
   })
-  if (res.status === 200) {
+
+  
+  if (res.status) {
     // 抽奖结束,抽奖次数设置为0
     LuckyClick.value = 0
-    showToast({
+    showDialog({
       message: `恭喜您，获得${amount.value}元优惠券`,
-      icon: 'like-o',
-      position: 'top',
-      duration: 4000,
-      overlay: true,
-      forbidClick: true,
-      onClose: () => {
-        isAllowClick.value = true;
-        rotate_deg.value = "rotate(" + 0 + "deg)";
-        rotate_transition.value = "";
-      }
+      theme: 'round-button',
+    }).then(() => {
+      isAllowClick.value = true;
+      rotate_deg.value = "rotate(" + 0 + "deg)";
+      rotate_transition.value = "";
     });
-    // router.push({ path: '/login' });
+    // showToast({
+    //   message: `恭喜您，获得${amount.value}元优惠券`,
+    //   icon: 'like-o',
+    //   position: 'top',
+    //   duration: 4000,
+    //   overlay: true,
+    //   forbidClick: true,
+    //   onClose: () => {
+    //     isAllowClick.value = true;
+    //     rotate_deg.value = "rotate(" + 0 + "deg)";
+    //     rotate_transition.value = "";
+    //   }
+    // });
   }
 }
 

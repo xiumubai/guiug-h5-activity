@@ -6,6 +6,7 @@ import store from '/@/store';
 import './assets/font/iconfont.css';
 import './assets/app.css';
 import 'vant/es/toast/style';
+import 'vant/es/dialog/style';
 
 const app = createApp(App);
 
