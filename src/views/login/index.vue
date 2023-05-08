@@ -172,7 +172,8 @@
         }
 
         .code_btn {
-          width: 226px;
+          // width: 226px;
+          padding: 0 16px;
           height: 80px;
           line-height: 80px;
           text-align: center;
@@ -197,7 +198,7 @@
       text-align: center;
       background-image: url('../../assets/images/login_btn-bg.png');
       background-size: 100% 100%;
-      position: absolute;
+      position: fixed;
       left: 50%;
       transform: translate(-50%);
       bottom: 106px;
