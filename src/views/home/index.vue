@@ -3,7 +3,7 @@
     <img class="logo" src="../../assets/images/logo.png"/>
     <div class="header_content">
       <img class="title" src="../../assets/images/title.png"/>
-      <div class="sub_title">立即参与 ，100%中奖</div>
+      <div class="sub_title">抽奖后立即截图保存哦</div>
     </div>
     <!-- 转盘包裹 -->
     <div class="rotate">
@@ -187,8 +187,9 @@ const set = () => {
 
   .rule {
     position: absolute;
-    left: 65px;
+    
     bottom: 112px;
+    width: 100%;
     .rule_title {
       text-align: center;
       height: 29px;
@@ -201,6 +202,7 @@ const set = () => {
     }
 
     .rule_item {
+      padding-left: 65px;
       font-size: 24px;
       font-family: Source Han Sans SC;
       font-weight: 500;
