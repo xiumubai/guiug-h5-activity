@@ -51,7 +51,7 @@ onMounted(() => {
 const start = () => {
   if (LuckyClick.value == 0) {
     showToast({
-      message: '抽奖机会已经用完了',
+      message: `您已抽奖完毕，中奖${amount.value}元`,
       position: 'top',
     });
     return;
